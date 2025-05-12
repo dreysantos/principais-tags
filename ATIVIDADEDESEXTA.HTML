@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Loja de Peças de Computador - Última Geração</title>
+</head>
+<body>
+    <h2>Equipamentos de Computador (Última Geração)</h2>
+
+    <table border="2" cellspacing="3" cellpadding="5">
+        <tr>
+            <th>Selecionar</th>
+            <th>Produto</th>
+            <th>Descrição</th>
+            <th>Valor (R$)</th>
+        </tr>
+
+        <tr>
+            <td><input type="checkbox" value="Placa-mãe ASUS Z790 - 2499.00"></td>
+            <td>Placa-mãe ASUS Z790</td>
+            <td>Suporte a DDR5, Intel 13ª e 14ª geração</td>
+            <td>2.499,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Processador Intel Core i9-14900K - 3999.00"></td>
+            <td>Intel Core i9-14900K</td>
+            <td>24 núcleos, até 6.0GHz</td>
+            <td>3.999,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Placa de Vídeo RTX 4090 24GB - 12999.00"></td>
+            <td>Placa de Vídeo RTX 4090 24GB</td>
+            <td>GDDR6X, 4K, Ray Tracing</td>
+            <td>12.999,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Memória RAM DDR5 32GB 6000MHz - 999.00"></td>
+            <td>Memória RAM DDR5 32GB 6000MHz</td>
+            <td>Dual Channel, alta performance</td>
+            <td>999,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="SSD NVMe 2TB Gen4 - 799.00"></td>
+            <td>SSD NVMe 2TB Gen4</td>
+            <td>Leitura até 7000MB/s</td>
+            <td>799,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Fonte 1000W 80 Plus Gold - 899.00"></td>
+            <td>Fonte 1000W 80 Plus Gold</td>
+            <td>Modular, alta eficiência</td>
+            <td>899,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Gabinete ATX com vidro temperado - 699.00"></td>
+            <td>Gabinete ATX com vidro temperado</td>
+            <td>Suporte a RGB, airflow otimizado</td>
+            <td>699,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Water Cooler 360mm RGB - 599.00"></td>
+            <td>Water Cooler 360mm RGB</td>
+            <td>Resfriamento líquido, alto desempenho</td>
+            <td>599,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Monitor Gamer 32'' 4K 144Hz - 3499.00"></td>
+            <td>Monitor Gamer 32'' 4K 144Hz</td>
+            <td>Tempo de resposta 1ms, G-Sync</td>
+            <td>3.499,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Teclado Mecânico RGB - 499.00"></td>
+            <td>Teclado Mecânico RGB</td>
+            <td>Switch óptico, anti-ghosting</td>
+            <td>499,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Mouse Gamer 16.000 DPI - 299.00"></td>
+            <td>Mouse Gamer 16.000 DPI</td>
+            <td>Sensor óptico, RGB, ergonomia</td>
+            <td>299,00</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" value="Headset Gamer 7.1 Surround - 399.00"></td>
+            <td>Headset Gamer 7.1 Surround</td>
+            <td>Microfone com cancelamento de ruído</td>
+            <td>399,00</td>
+        </tr>
+
+        <tr>
+            <td colspan="4" align="center">
+                <button onclick="adicionarCarrinho()">Adicionar ao carrinho</button>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Itens no Carrinho:</h3>
+    <ul id="carrinho"></ul>
+
+    <p><strong>Total: R$ <span id="total">0,00</span></strong></p>
+
+    <button onclick="finalizarCompra()">Finalizar Compra</button>
+
+    <script>
+        function adicionarCarrinho() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const carrinho = document.getElementById('carrinho');
+            let total = parseFloat(document.getElementById('total').textContent.replace(',', '.'));
+
+            checkboxes.forEach(item => {
+                const texto = item.value;
+                const [nome, precoStr] = texto.split(' - ');
+                const preco = parseFloat(precoStr);
+
+                const li = document.createElement('li');
+                li.textContent = `${nome} - R$ ${preco.toFixed(2).replace('.', ',')}`;
+                carrinho.appendChild(li);
+
+                total += preco;
+                item.checked = false;
+            });
+
+            document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+        }
+
+        function finalizarCompra() {
+            const itens = document.querySelectorAll('#carrinho li');
+            if (itens.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            let mensagem = "Você comprou:\n";
+            itens.forEach(item => {
+                mensagem += "- " + item.textContent + "\n";
+            });
+
+            const total = document.getElementById('total').textContent;
+            mensagem += `\nTotal da compra: R$ ${total}`;
+
+            alert(mensagem);
+
+            // Limpa o carrinho
+            document.getElementById('carrinho').innerHTML = "";
+            document.getElementById('total').textContent = "0,00";
+        }
+    </script>
+</body>
+</html>
